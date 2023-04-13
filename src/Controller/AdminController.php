@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,9 +26,11 @@ class AdminController extends AbstractController
         }
 
         $categories = $entityManager->getRepository(Category::class)->findBy(['deletedAt' => null]);
+        $articles = $entityManager->getRepository(Article::class)->findBy(['deletedAt' => null]);
 
         return $this->render('admin/show_dashboard.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'articles' => $articles
         ]);
     } // end showDashboard()
 
@@ -35,9 +38,11 @@ class AdminController extends AbstractController
     public function showArchives(EntityManagerInterface $entityManager): Response
     {
         $categories = $entityManager->getRepository(Category::class)->findAllArchived();
+        $articles = $entityManager->getRepository(Article::class)->findAllArchived();
 
         return $this->render('admin/show_archive.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'articles' => $articles
         ]);
     }
 
