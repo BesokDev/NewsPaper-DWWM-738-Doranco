@@ -25,10 +25,13 @@ class CommentaryController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
+
             $commentary->setCreatedAt(new DateTime());
             $commentary->setUpdatedAt(new DateTime());
             $commentary->setArticle($article);
             $commentary->setAuthor($this->getUser());
+
+//            dd($form->get('comment')->getData());
 
             $repository->save($commentary, true);
 
